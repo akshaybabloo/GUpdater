@@ -6,9 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -17,17 +16,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
+import properties.PropertiesReader;
+import properties.PropertiesWriter;
+import repo.JSON;
 
-import java.io.BufferedInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.util.Objects;
+import java.util.Optional;
 
-/**
- * Created by akshayrajgollahalli on 5/10/15.
- */
 public class Controller {
     @FXML
     private MenuItem close;
@@ -46,10 +42,40 @@ public class Controller {
 
     public void initialize(){
 
-        String text = "* Bug fixes\r\n* User can't open JCal unless company name given";
+//        if (Objects.equals(System.getProperty("os.name"), "Mac OS X")){
+//
+//        }
 
-        Text text1 = new Text(text);
+        JSON json = new JSON();
+        String[] result = json.returner();
+        String name1 = result[3].replace(".zip","");
+
+        new PropertiesWriter(name1, "v1.0.3", result[1], result[2]);
+
+        Text text1 = new Text(result[2]);
         text1.setFont(Font.font("Courier New", FontWeight.BOLD, 15));
+
+        name.setFont(Font.font("", FontWeight.BOLD, 12));
+        name.setText(name1);
+
+        newVersion.setFont(Font.font("", FontWeight.BOLD, 12));
+        newVersion.setText(result[1]);
+
+        PropertiesReader propertiesReader = new PropertiesReader();
+        String[] tempString = propertiesReader.reader();
+        currentVersion.setText(tempString[1]);
+
+        if (Objects.equals(result[1], tempString[1])){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText("Look, a Confirmation Dialog");
+            alert.setContentText("Are you ok with this?");
+
+            Optional<ButtonType> result1 = alert.showAndWait();
+            if (result1.get() == ButtonType.OK){
+                Platform.exit();
+            }
+        }
 
         summary.getChildren().add(text1);
 
@@ -63,13 +89,14 @@ public class Controller {
             stage.initOwner(ownerWindow);
             Parent parent = null;
             try {
-                parent = FXMLLoader.load(getClass().getResource("/gui/GUpdater-progress.fxml"));
+                parent = FXMLLoader.load(getClass().getResource("/resource/GUpdater-progress.fxml"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            assert parent != null;
             Scene scene = new Scene(parent, 600, 148);
-//            stage.setResizable(false);
-//            stage.initStyle(StageStyle.UTILITY);
+            stage.setResizable(false);
+            stage.getIcons().add(new Image("/resource/g-4.png"));
             stage.setTitle("GUpdater");
             stage.setScene(scene);
             stage.show();
