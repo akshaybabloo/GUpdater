@@ -30,7 +30,7 @@ public class PropertiesWriter {
         try {
             File file = new File("GUpdater.properties");
 
-            FileOutputStream fileOutputStream = null;
+            FileOutputStream fileOutputStream;
             fileOutputStream = new FileOutputStream(file);
             properties.store(fileOutputStream, "Your GUpdater properties");
             fileOutputStream.close();
