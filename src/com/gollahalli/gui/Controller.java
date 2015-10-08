@@ -1,5 +1,6 @@
 package com.gollahalli.gui;
 
+import com.gollahalli.properties.JCalPropertiesReader;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,7 +51,10 @@ public class Controller {
         String[] result = json.returner();
         String name1 = result[3].replace(".zip","");
 
-        new PropertiesWriter(name1, "v1.0.3", result[1], result[2]);
+        JCalPropertiesReader jCalPropertiesReader= new JCalPropertiesReader();
+        String[] strings = jCalPropertiesReader.reader();
+
+        new PropertiesWriter(name1, strings[5], result[1], result[2]);
 
         Text text1 = new Text(result[2]);
         text1.setFont(Font.font("Courier New", FontWeight.BOLD, 15));
@@ -67,9 +71,9 @@ public class Controller {
 
         if (Objects.equals(result[1], tempString[1])){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Confirmation Dialog");
-            alert.setHeaderText("Look, a Confirmation Dialog");
-            alert.setContentText("Are you ok with this?");
+            alert.setTitle("GUpdater");
+            alert.setHeaderText("JCal up to date");
+            alert.setContentText("Looks like your software is up to date");
 
             Optional<ButtonType> result1 = alert.showAndWait();
             if (result1.get() == ButtonType.OK){
