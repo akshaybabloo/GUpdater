@@ -27,13 +27,12 @@ public class PropertiesWriter {
         properties.setProperty("NewVersion", this.newVersion);
         properties.setProperty("Summary", this.summary);
 
-
         try {
             File file = new File("GUpdater.properties");
 
             FileOutputStream fileOutputStream = null;
             fileOutputStream = new FileOutputStream(file);
-            properties.store(fileOutputStream, "Your GUpdater com.gollahalli.properties");
+            properties.store(fileOutputStream, "Your GUpdater properties");
             fileOutputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
