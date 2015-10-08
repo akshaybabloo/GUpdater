@@ -36,18 +36,21 @@ public class test3 {
 //                e.printStackTrace();
 //            }
 //        }
-        if (Objects.equals(System.getProperty("os.name"), "Mac OS X")) {
-            try {
-                File f = new File("/Applications/JCal.app/Contents/Java");
-                if (f.exists() && f.isDirectory()) {
-                    FileUtils.deleteDirectory(FileUtils.getFile("/Applications/JCal.app/Contents/Java"));
-                }
-                FileUtils.moveDirectoryToDirectory(FileUtils.getFile(System.getProperty("user.home") + "/Downloads/Java"), FileUtils.getFile("/Applications/JCal.app/Contents/"), true);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }else if (Objects.equals(System.getProperty("os.name"),"")){
+//        if (Objects.equals(System.getProperty("os.name"), "Mac OS X")) {
+//            try {
+//                File f = new File("/Applications/JCal.app/Contents/Java");
+//                if (f.exists() && f.isDirectory()) {
+//                    FileUtils.deleteDirectory(FileUtils.getFile("/Applications/JCal.app/Contents/Java"));
+//                }
+//                FileUtils.moveDirectoryToDirectory(FileUtils.getFile(System.getProperty("user.home") + "/Downloads/Java"), FileUtils.getFile("/Applications/JCal.app/Contents/"), true);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }else if (Objects.equals(System.getProperty("os.name"),"")){
+//
+//        }
 
-        }
+        System.out.println(System.getProperty("user.home"));
+        System.out.println(System.getProperty("sun.desktop"));
     }
 }
