@@ -1,4 +1,4 @@
-package downloader;
+package com.gollahalli.properties;
 
 /**
  * Created by akshayrajgollahalli on 5/10/15.

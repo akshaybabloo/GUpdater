@@ -1,4 +1,4 @@
-package gui;
+package com.gollahalli.gui;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -16,9 +16,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
-import properties.PropertiesReader;
-import properties.PropertiesWriter;
-import repo.JSON;
+import com.gollahalli.properties.PropertiesReader;
+import com.gollahalli.properties.PropertiesWriter;
+import com.gollahalli.repo.JSON;
 
 import java.io.IOException;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package gui;
+package com.gollahalli.gui;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.stage.Stage;
-import repo.JSON;
+import com.gollahalli.repo.JSON;
 
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;

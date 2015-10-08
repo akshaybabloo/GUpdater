@@ -1,4 +1,4 @@
-package repo;
+package com.gollahalli.repo;
 
 
 import java.io.BufferedReader;

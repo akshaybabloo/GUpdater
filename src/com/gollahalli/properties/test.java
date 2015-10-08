@@ -1,11 +1,9 @@
-package downloader;
+package com.gollahalli.properties;
 
 /**
  * Created by akshayrajgollahalli on 5/10/15.
  */
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -31,12 +29,9 @@ public class test  extends Application {
         final ProgressBar pb = new ProgressBar(0);
         final ProgressIndicator pi = new ProgressIndicator(0);
 
-        slider.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                pb.setProgress(new_val.doubleValue()/50);
-                pi.setProgress(new_val.doubleValue()/50);
-            }
+        slider.valueProperty().addListener((ov, old_val, new_val) -> {
+            pb.setProgress(new_val.doubleValue()/50);
+            pi.setProgress(new_val.doubleValue()/50);
         });
 
         final HBox hb = new HBox();

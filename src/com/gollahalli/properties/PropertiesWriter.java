@@ -1,4 +1,4 @@
-package properties;
+package com.gollahalli.properties;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,7 +33,7 @@ public class PropertiesWriter {
 
             FileOutputStream fileOutputStream = null;
             fileOutputStream = new FileOutputStream(file);
-            properties.store(fileOutputStream, "Your GUpdater properties");
+            properties.store(fileOutputStream, "Your GUpdater com.gollahalli.properties");
             fileOutputStream.close();
         } catch (IOException e) {
             e.printStackTrace();

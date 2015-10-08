@@ -1,4 +1,4 @@
-package properties;
+package com.gollahalli.properties;
 
 import java.io.*;
 import java.util.Properties;
@@ -13,7 +13,7 @@ public class PropertiesReader {
         InputStream is;
 
         try {
-            File file = new File("GUpdater.properties");
+            File file = new File("GUpdater.com.gollahalli.properties");
             is = new FileInputStream(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
