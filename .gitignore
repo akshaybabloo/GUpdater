@@ -97,3 +97,5 @@ JCal.properties
 !json-20140107.jar
 !/lib
 GUpdater.properties
+.idea/workspace.xml
+workspace.xml
