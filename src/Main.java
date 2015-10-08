@@ -10,8 +10,6 @@ import java.io.IOException;
 public class Main extends Application {
 
     public static void main(String[] args) {
-//        download("https://github.com/gollahalli/JCal/releases/download/v1.0.2/JCal-v1.0.2.zip", System.getProperty("user.home") + "/files.zip");
-//        System.out.println(System.getProperty("user.home"));
         launch(args);
     }
 
