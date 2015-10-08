@@ -1,3 +1,4 @@
+
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -92,5 +93,7 @@ graph3.png
 pie.png
 
 JCal.properties
-
+!commons-io-2.4.jar
+!json-20140107.jar
+!/lib
 GUpdater.properties
