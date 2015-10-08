@@ -13,7 +13,7 @@ public class PropertiesReader {
         InputStream is;
 
         try {
-            File file = new File("GUpdater.com.gollahalli.properties");
+            File file = new File("GUpdater.properties");
             is = new FileInputStream(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
