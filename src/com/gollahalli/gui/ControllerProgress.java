@@ -1,5 +1,6 @@
 package com.gollahalli.gui;
 
+import com.gollahalli.repo.JSON;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -11,15 +12,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.stage.Stage;
-import com.gollahalli.repo.JSON;
+import org.apache.commons.io.FileUtils;
 
-import java.io.BufferedInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Objects;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * Created by akshayrajgollahalli on 5/10/15.
@@ -37,6 +38,7 @@ public class ControllerProgress {
     private ProgressBar progressBar;
     @FXML
     private ProgressIndicator progressIndicator;
+    String[] url = {""};
 
     public void initialize() {
         ok.setDisable(true);
@@ -47,11 +49,11 @@ public class ControllerProgress {
         });
 
         JSON json = new JSON();
-        String[] url = json.returner();
+        url = json.returner();
 
         if (Objects.equals(System.getProperty("os.name"), "Mac OS X")) {
             start(url[0], System.getProperty("user.home") + "/Downloads/" + url[3]);
-        }else if (Objects.equals(System.getProperty("os.name"), "Mac OS X")){
+        } else if (Objects.equals(System.getProperty("os.name"), "Mac OS X")) {
             start(url[0], System.getProperty("user.home") + "\\Downloads\\" + url[3]);
         }
     }
@@ -73,7 +75,6 @@ public class ControllerProgress {
 
                     in = new BufferedInputStream(url.openStream());
                     out = new FileOutputStream(localPath);
-
 
                     while ((count = in.read(data, 0, 1024)) != -1) {
                         out.write(data, 0, count);
@@ -114,11 +115,80 @@ public class ControllerProgress {
             public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldState, Worker.State newState) {
                 if (newState == Worker.State.SUCCEEDED) {
                     ok.setDisable(false);
+
+                    ControllerProgress progress = new ControllerProgress();
+                    progress.unZipIt(System.getProperty("user.home") + "/Downloads/" + url[3], System.getProperty("user.home") + "/Downloads/JCal");
+
+                    Boolean mac = System.getProperty("os.name").toLowerCase().contains("mac");
+                    Boolean win = System.getProperty("os.name").toLowerCase().contains("windows");
+
+                    if (mac) {
+                        try {
+                            File f = new File("/Applications/JCal.app/Contents/Java");
+                            if (f.exists() && f.isDirectory()) {
+                                FileUtils.deleteDirectory(FileUtils.getFile("/Applications/JCal.app/Contents/Java/lib"));
+                                FileUtils.deleteQuietly(FileUtils.getFile("/Applications/JCal.app/Contents/Java/JCal.jar"));
+                            }
+                            FileUtils.copyDirectoryToDirectory(FileUtils.getFile(System.getProperty("user.home") + "/Downloads/JCal/lib"), FileUtils.getFile("/Applications/JCal.app/Contents/Java"));
+                            FileUtils.copyFileToDirectory(FileUtils.getFile(System.getProperty("user.home") + "/Downloads/JCal/JCal.jar"), FileUtils.getFile("/Applications/JCal.app/Contents/Java"));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (win) {
+                    }
                 }
             }
         });
 
         new Thread(task).start();
+    }
+
+    public void unZipIt(String zipFile, String outputFolder) {
+
+        byte[] buffer = new byte[1024];
+
+        try {
+
+            //create output directory is not exists
+            File folder = new File(outputFolder);
+            if (!folder.exists()) {
+                folder.mkdir();
+            }
+
+            //get the zip file content
+            ZipInputStream zis =
+                    new ZipInputStream(new FileInputStream(zipFile));
+            //get the zipped file list entry
+            ZipEntry ze = zis.getNextEntry();
+
+            while (ze != null) {
+                if (ze.isDirectory()) {
+                    ze = zis.getNextEntry();
+                    continue;
+                }
+                String fileName = ze.getName();
+                File newFile = new File(outputFolder + File.separator + fileName);
+                System.out.println("file unzip : " + newFile.getAbsoluteFile());
+                //create all non exists folders
+                //else you will hit FileNotFoundException for compressed folder
+                new File(newFile.getParent()).mkdirs();
+                FileOutputStream fos = new FileOutputStream(newFile);
+                int len;
+                while ((len = zis.read(buffer)) > 0) {
+                    fos.write(buffer, 0, len);
+                }
+                fos.close();
+                ze = zis.getNextEntry();
+            }
+
+            zis.closeEntry();
+            zis.close();
+
+            System.out.println("Done");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }
