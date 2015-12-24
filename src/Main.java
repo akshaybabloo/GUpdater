@@ -20,7 +20,6 @@ public class Main extends Application {
         try {
             root = FXMLLoader.load(getClass().getResource("/resource/GUpdater-gui.fxml"));
         } catch (IOException e) {
-            e.printStackTrace();
         }
 
         Scene scene = new Scene(root, 600, 400);

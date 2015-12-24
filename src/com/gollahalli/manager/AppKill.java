@@ -22,7 +22,6 @@ public class AppKill {
             Process kill = Runtime.getRuntime().exec("kill -9 " + (test != null ? test.split(" ") : new String[0])[0]);
             input.close();
         } catch (Exception err) {
-            err.printStackTrace();
         }
     }
     
