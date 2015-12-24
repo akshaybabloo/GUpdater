@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
  * Created by akshayrajgollahalli on 24/12/15.
  */
 public class AppKill {
-
-    public static void main(String[] args) {
+    
+    public void macAppKill(){
         try {
             String line;
             String test = null;
@@ -24,5 +24,9 @@ public class AppKill {
         } catch (Exception err) {
             err.printStackTrace();
         }
+    }
+    
+    public void windowsAppKill(){
+        
     }
 }
