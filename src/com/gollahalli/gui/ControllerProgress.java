@@ -1,5 +1,6 @@
 package com.gollahalli.gui;
 
+import com.gollahalli.manager.FileMover;
 import com.gollahalli.repo.JSON;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.stage.Stage;
-import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -84,23 +84,18 @@ public class ControllerProgress {
                             updateProgress((sumCount / size * 100.0), 100.0);
                         }
                     }
-
                 } catch (MalformedURLException e1) {
-                    e1.printStackTrace();
                 } catch (IOException e2) {
-                    e2.printStackTrace();
                 } finally {
                     if (in != null)
                         try {
                             in.close();
                         } catch (IOException e3) {
-                            e3.printStackTrace();
                         }
                     if (out != null)
                         try {
                             out.close();
                         } catch (IOException e4) {
-                            e4.printStackTrace();
                         }
                 }
                 return null;
@@ -121,19 +116,10 @@ public class ControllerProgress {
 
                     Boolean mac = System.getProperty("os.name").toLowerCase().contains("mac");
                     Boolean win = System.getProperty("os.name").toLowerCase().contains("windows");
-
+                    FileMover fm = new FileMover();
+                    boolean smallUpdate = true; // change it later
                     if (mac) {
-                        try {
-                            File f = new File("/Applications/JCal.app/Contents/Java");
-                            if (f.exists() && f.isDirectory()) {
-                                FileUtils.deleteDirectory(FileUtils.getFile("/Applications/JCal.app/Contents/Java/lib"));
-                                FileUtils.deleteQuietly(FileUtils.getFile("/Applications/JCal.app/Contents/Java/JCal.jar"));
-                            }
-                            FileUtils.copyDirectoryToDirectory(FileUtils.getFile(System.getProperty("user.home") + "/Downloads/JCal/lib"), FileUtils.getFile("/Applications/JCal.app/Contents/Java"));
-                            FileUtils.copyFileToDirectory(FileUtils.getFile(System.getProperty("user.home") + "/Downloads/JCal/JCal.jar"), FileUtils.getFile("/Applications/JCal.app/Contents/Java"));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        fm.forMac(smallUpdate);
                     } else if (win) {
                     }
                 }
